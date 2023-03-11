@@ -1,0 +1,36 @@
+<div class="container my-5">
+    <h1 class="mb-3">Employees</h1>
+    <ng-container *ngIf="(employees | async) as employeeList">
+
+        <table class="table" *ngIf="employeeList.length > 0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Salary</th>
+                    <th>Department</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employeeList">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.name}}</td>
+                    <td>{{employee.email}}</td>
+                    <td>{{employee.phone}}</td>
+                    <td>{{employee.salary}}</td>
+                    <td>{{employee.department}}</td>
+                    <td><a [routerLink]="['/employees','edit', employee.id]">View</a></td>
+                    <td (click)="deleteEmployee(employee.id)">Delete</td>
+
+                    
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+    <p *ngIf="(employees | async)?.length == 0">No employees Found</p>
+</div>
