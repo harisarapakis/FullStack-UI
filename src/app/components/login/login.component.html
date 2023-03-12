@@ -1,0 +1,43 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Login</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="loginForm">
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required','username')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" placeholder="UserName" formControlName="username">
+                                </div>
+                            </div>
+                            <small *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required','username')" class="text-danger">*Username is required</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input [type]="type" placeholder="Password" formControlName="password">
+                                </div>
+                            </div>
+                            <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')" class="text-danger">*Password is required</small>
+                            <div class="form-inline fr mt-4">
+                                <a id="forget" class="font-weight-bold" (click)="openForgetPasswordModal()">Forget Password?</a>
+                            </div>
+                            <button (click)="onLogin()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Login</button>
+                            <div class="text-center pt-4 text-muted">Don't have account? <a id="forget" routerLink="/signup">Sign Up</a></div>
+                        </form>
+                    </div>
+                    <div class="mx-3 my-2 py-2 bordert">
+                        <div class="text-center py-3">
+                            <a href="https://www.facebook.com/yourpage/" class="px-2"><i class="fab fa-facebook-f fa-2x"></i></a>
+                            <a href="https://github.com/yourusername" class="px-2"><i class="fab fa-github fa-2x"></i></a>
+                            <a href="https://www.linkedin.com/in/yourprofile/" class="px-2"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
