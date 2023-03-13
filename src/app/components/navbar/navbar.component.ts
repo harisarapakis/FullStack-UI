@@ -15,10 +15,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
       this.store.getFullName().subscribe(val=> {
-        console.log(val);
        let fullNameFromToken = this.auth.getFullNameFromToken();
-       console.log(fullNameFromToken);
-
        this.fullName = val || fullNameFromToken;
       });
    }

@@ -7,6 +7,7 @@ import ValidateForm from 'src/app/shared/helpers/validateForm';
 import { MatDialog } from '@angular/material/dialog';
 import { ForgetPasswordModalComponent } from './forgot-password-modal/forgot-password-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserStoreService } from 'src/app/services/userStore/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private store: UserStoreService
   ) { }
 
   ngOnInit() {
@@ -39,11 +41,15 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm.value).pipe(
         map(x => {
-          this.auth.setToken(x.token);
+          this.auth.setToken(x.accessToken);
+          this.auth.setRefreshToken(x.refreshToken);
+          let tokenPayload = this.auth.decodeToken();
+          this.store.setFullName(tokenPayload.unique_name);
+          this.store.setRole(tokenPayload)
           this.router.navigate(['employees'])}
         ),
         catchError(err => {
-          return of(this.snackBar.open(err?.error.message, 'Dismiss', {
+          return of(this.snackBar.open('cant connect', 'Dismiss', {
               duration: 3000
             }));
         })).subscribe();

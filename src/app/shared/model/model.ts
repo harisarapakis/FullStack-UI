@@ -6,3 +6,7 @@ export interface Employee {
     salary: number;
     department: string;
 }
+export interface TokenApiModel{
+    accessToken: string,
+    refreshToken: string
+}

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, map, of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserStoreService } from 'src/app/services/userStore/user-store.service';
 import ValidateForm from 'src/app/shared/helpers/validateForm';
 
 @Component({
@@ -16,7 +17,7 @@ export class SignupComponent implements OnInit {
   signUpForm!: FormGroup;
 
   constructor(private fb: FormBuilder,private auth: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,private store: UserStoreService
     ) { }
 
   ngOnInit() {
@@ -37,10 +38,11 @@ initializeForm() {
     if(this.signUpForm.valid){
       this.auth.signUp(this.signUpForm.value).pipe(
       map(x=> {
+        this.signUpForm.reset();
         this.snackBar.open(x.message, 'Dismiss', {
           duration: 3000
         });
-        this.signUpForm.reset();
+      
       }
       ),
       catchError(err => {
